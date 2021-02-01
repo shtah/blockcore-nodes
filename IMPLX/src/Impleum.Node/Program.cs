@@ -23,7 +23,7 @@ namespace Impleum.Daemon
       {
          try
          {
-            var nodeSettings = new NodeSettings(networksSelector: Networks.Networks.Impleum, args: args);
+            var nodeSettings = new NodeSettings(networksSelector: Blockcore.Networks.Impleum.Networks.Impleum, args: args);
 
             IFullNodeBuilder nodeBuilder = new FullNodeBuilder()
                 .UseNodeSettings(nodeSettings)

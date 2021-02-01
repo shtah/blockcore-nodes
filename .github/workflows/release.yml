@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest ]
-        chain: ['AMS','BTC','CITY', 'EXOS', 'IMPL', 'RUTA', 'STRAT', 'XDS', 'XLR', 'X42']
+        chain: ['AMS','BTC','CITY', 'EXOS', 'IMPLX', 'RUTA', 'STRAT', 'XDS', 'XLR', 'X42']
         include:
           - chain: AMS
             name: "ams"
@@ -30,10 +30,10 @@ jobs:
             name: "exos"
             assembly: "OpenExo.Node.dll"
             ports: "4562 4561 39120"
-          - chain: IMPL
-            name: "impl"
+          - chain: IMPLX
+            name: "implx"
             assembly: "Impleum.Node.dll"
-            ports: "16171 16172 38222"
+            ports: "18103 18104 18105"
           - chain: RUTA
             name: "ruta"
             assembly: "Rutanio.Node.dll"
@@ -71,7 +71,6 @@ jobs:
           echo "tag_name - ${{ github.event.release.tag_name }}"
           echo "assets - ${{ github.event.assets }}"
           echo "assets[0] - ${{ github.event.assets[0] }}"
-
       - uses: cschleiden/replace-tokens@v1
         with:
           files: '["Dockerfile"]'
@@ -83,9 +82,9 @@ jobs:
           ASSEMBLY: ${{ matrix.assembly }}
 
       - name: Build the Docker container image
-        run: docker build -f "Dockerfile" -t blockcore/node-${{ matrix.name }}:latest -t blockcore/node-${{ matrix.name }}:${{ github.event.release.tag_name }} --label "unstable=true" "."
+        run: docker build -f "Dockerfile" -t shtah/node-${{ matrix.name }}:latest -t shtah/node-${{ matrix.name }}:${{ github.event.release.tag_name }} --label "unstable=true" "."
 
       - name: Login and Push to Docker Registry
         run: |
-          docker login -u "sondreb" -p "${{secrets.DockerHubSecret}}"
-          docker push blockcore/node-${{ matrix.name }}
+          docker login -u "shtah" -p "${{secrets.DockerHubSecret}}"
+          docker push shtah/node-${{ matrix.name }}
